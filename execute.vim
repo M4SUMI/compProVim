@@ -1,7 +1,11 @@
+let s:compVim_dir = expand('%:p:h')
+let s:main = s:compVim_dir . "/main.cpp"
+let s:in = s:compVim_dir . "/in.txt"
+let s:snips = s:compVim_dir . "/snippets"
 echo "競プロモード始動！！！"
-e main.cpp
+exec "edit " . s:main
 rightbelow 15sp
-e in.txt
+exec "edit " . s:in
 wincmd k
 
 augroup saveAndCompile
@@ -11,20 +15,23 @@ augroup END
 
 autocmd saveAndCompile BufWritePost main.cpp call SaveAndCompile()
 
-let g:neosnippet#snippets_directory='snippets'
+let g:neosnippet#snippets_directory=s:snips
 
 function! SaveAndCompile ()
 	wincmd j
 	wincmd l
 	w
 	wincmd k
-	QuickRun <in.txt
-				\ -outputter/buffer/split ":wincmd j | vs"
-				\ -command "g++"
-				\ -cmdopt "-std=c++14"
-				\ -hook/time 1
+	exec "QuickRun <" .
+				\ s:in .
+				\ " -outputter/buffer/split \"wincmd j | vs\"" .
+				\ " -command \"g++\"" .
+				\ " -cmdopt \"-std=c++14\"" .
+				\ " -hook/time 1"
 endfunction
 
 
 syn keyword cConstant INF MOD EPS
 syn keyword	cRepeat		rep range
+
+command! Q wqall
