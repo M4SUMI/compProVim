@@ -1,4 +1,4 @@
-let s:compVim_dir = expand('%:p:h')
+let s:compVim_dir = expand('<sfile>:p:h')
 let s:main = s:compVim_dir . "/main.cpp"
 let s:in = s:compVim_dir . "/in.txt"
 let s:snips = s:compVim_dir . "/snippets"
