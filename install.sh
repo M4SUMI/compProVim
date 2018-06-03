@@ -7,5 +7,8 @@ fi
 if grep Comp $XDG_CONFIG_HOME/nvim/init.vim > /dev/null; then
 	echo "CompProMode has been installed."
 else
-	echo "\"CompProMode\ncommand! Comp source ${PWD}/execute.vim" >> $XDG_CONFIG_HOME/nvim/init.vim
+    echo "\"CompProMode"                              >> $XDG_CONFIG_HOME/nvim/init.vim
+    echo "if isdirectory(expand('$HOME/compProVim'))" >> $XDG_CONFIG_HOME/nvim/init.vim
+    echo "\tcommand! Comp source ${PWD}/execute.vim"  >> $XDG_CONFIG_HOME/nvim/init.vim
+    echo "endif"                                      >> $XDG_CONFIG_HOME/nvim/init.vim
 fi
