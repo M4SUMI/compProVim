@@ -219,6 +219,65 @@ options     head
 
   };
 
+snippet     stronglyConnectedComponent
+abbr        stronglyConnectedComponent
+options     head
+    struct StronglyConnectedComponents {
+        int sz;
+        vector <vector <int>> G, rG;
+        vector <pair <int, int>> edges;
+        vector <int> vs, used, root;
+        int numOfVertexAfterSCC = -1;
+
+        StronglyConnectedComponents ( int v )
+            : sz( v ), G( v ), rG( v ), used( v, 0 ), root( v, -1 ) {}
+
+        int operator [] ( int i ) {
+            scc();
+            return root[i];
+        }
+
+        void add_edge( int from, int to ) {
+            G[from].push_back( to );
+            rG[to].push_back( from );
+            edges.emplace_back( from, to );
+        }
+
+        void dfs( int v ) {
+            if ( used[v] ) return;
+            used[v] = true;
+            for ( auto & i : G[v] ) dfs( i );
+            vs.push_back( v );
+        }
+
+        void rdfs( int v, int k ) {
+            if ( root[v] != -1 ) return;
+            root[v] = k;
+            for ( auto & i : rG[v] ) rdfs( i, k );
+        }
+
+        int scc() {
+            if ( numOfVertexAfterSCC != -1 ) return numOfVertexAfterSCC;
+            for ( int i = 0; i < sz; i++ ) dfs( i );
+            numOfVertexAfterSCC = 0;
+            reverse( vs.begin(), vs.end() );
+            for ( auto & i : vs ) if ( root[i] == -1 ) rdfs( i, numOfVertexAfterSCC++ );
+            return numOfVertexAfterSCC;
+        }
+
+        vector <vector <int>> getDAG() {
+            vector <vector <int>> res( scc() );
+            set <pair <int, int>> connect;
+            for ( auto & i : edges ) {
+                int from = root[i.first], to = root[i.second];
+                if ( from == to ) continue;
+                if ( connect.count( { from, to } ) ) continue;
+                res[from].push_back( to );
+                connect.emplace( from, to );
+            }
+            return res;
+        }
+    };
 ######################
 #                    #
 #        Math        #
