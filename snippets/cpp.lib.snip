@@ -23,8 +23,6 @@ options     head
     range (${1:i}, ${2}, ${3}) {
         ${4:TARGET}
     }
-<<<<<<< HEAD
->>>>>>> 72a4015a84ef6f08ae7a2eb09ac018c4cea14a73
 
 #####################
 #                   #
@@ -34,7 +32,6 @@ options     head
 snippet     unionFindTree
 abbr        unionFindTree
 options     head
-<<<<<<< HEAD
     class UnionFindTree {
     private:
         vector <int> tree;
@@ -115,7 +112,6 @@ options     head
         }
 
         T sum(int x, int y) { return (sum(y) - sum(x - 1)); }
->>>>>>> 72a4015a84ef6f08ae7a2eb09ac018c4cea14a73
     };
 
 #####################
@@ -126,7 +122,6 @@ options     head
 snippet     kruskal
 abbr        kruskal
 options     head
-<<<<<<< HEAD
     class Kruskal : public UnionFindTree{
     private:
         struct edge {
@@ -160,14 +155,12 @@ options     head
             }
             return res;
         }
->>>>>>> 72a4015a84ef6f08ae7a2eb09ac018c4cea14a73
     };
 
 snippet     dijkstra
 abbr        dijkstra
 options     head
     class Dijkstra {
-<<<<<<< HEAD
     private:
         struct edge {int to, cost;};
         vector <vector <edge>> G;
@@ -205,14 +198,12 @@ options     head
                 }
             }
         }
->>>>>>> 72a4015a84ef6f08ae7a2eb09ac018c4cea14a73
     };
 
 snippet     warshall
 abbr        warshall
 options     head
     class Warshall {
-<<<<<<< HEAD
     private:
         vector <vector <int>> G;
 
@@ -247,7 +238,6 @@ options     head
                         if(G[i][k] != INF && G[k][j] != INF)
                             G[i][j] = min(G[i][j], G[i][k] + G[k][j]);
         }
->>>>>>> 72a4015a84ef6f08ae7a2eb09ac018c4cea14a73
 
     };
 
@@ -324,12 +314,10 @@ options     head
         prime = vector <bool> (n + 1, true);
         if(n >= 0) prime[0] = false;
         if(n >= 1) prime[1] = false;
-<<<<<<< HEAD
         for(int i = 2; i * i <= n; i++) if(prime[i]) {
             for(int j = i * 2; j < n; j += i) prime[j] = false;
         }
         return prime;
->>>>>>> 72a4015a84ef6f08ae7a2eb09ac018c4cea14a73
     }
 
 snippet     factorial
