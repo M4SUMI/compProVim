@@ -23,6 +23,8 @@ options     head
     range (${1:i}, ${2}, ${3}) {
         ${4:TARGET}
     }
+<<<<<<< HEAD
+>>>>>>> 72a4015a84ef6f08ae7a2eb09ac018c4cea14a73
 
 #####################
 #                   #
@@ -32,6 +34,7 @@ options     head
 snippet     unionFindTree
 abbr        unionFindTree
 options     head
+<<<<<<< HEAD
     class UnionFindTree {
     private:
         vector <int> tree;
@@ -112,6 +115,7 @@ options     head
         }
 
         T sum(int x, int y) { return (sum(y) - sum(x - 1)); }
+>>>>>>> 72a4015a84ef6f08ae7a2eb09ac018c4cea14a73
     };
 
 #####################
@@ -122,6 +126,7 @@ options     head
 snippet     kruskal
 abbr        kruskal
 options     head
+<<<<<<< HEAD
     class Kruskal : public UnionFindTree{
     private:
         struct edge {
@@ -155,12 +160,14 @@ options     head
             }
             return res;
         }
+>>>>>>> 72a4015a84ef6f08ae7a2eb09ac018c4cea14a73
     };
 
 snippet     dijkstra
 abbr        dijkstra
 options     head
     class Dijkstra {
+<<<<<<< HEAD
     private:
         struct edge {int to, cost;};
         vector <vector <edge>> G;
@@ -198,12 +205,14 @@ options     head
                 }
             }
         }
+>>>>>>> 72a4015a84ef6f08ae7a2eb09ac018c4cea14a73
     };
 
 snippet     warshall
 abbr        warshall
 options     head
     class Warshall {
+<<<<<<< HEAD
     private:
         vector <vector <int>> G;
 
@@ -238,6 +247,7 @@ options     head
                         if(G[i][k] != INF && G[k][j] != INF)
                             G[i][j] = min(G[i][j], G[i][k] + G[k][j]);
         }
+>>>>>>> 72a4015a84ef6f08ae7a2eb09ac018c4cea14a73
 
     };
 
@@ -314,36 +324,38 @@ options     head
         prime = vector <bool> (n + 1, true);
         if(n >= 0) prime[0] = false;
         if(n >= 1) prime[1] = false;
+<<<<<<< HEAD
         for(int i = 2; i * i <= n; i++) if(prime[i]) {
             for(int j = i * 2; j < n; j += i) prime[j] = false;
         }
         return prime;
+>>>>>>> 72a4015a84ef6f08ae7a2eb09ac018c4cea14a73
     }
 
 snippet     factorial
 abbr        factorial
 options     head
-  long long int factorial(int n) {
-    long long int ans = 1;
-    while(n--)
-      ans = (ans * n) % MOD;
-    return ans;
-  }
+    long long int factorial(int n) {
+        long long int ans = 1;
+        while(n--)
+            ans = (ans * n) % MOD;
+        return ans;
+    }
 
 snippet     gcd
 abbr        gcd
 options     head
-  int gcd(int a, int b) {
-    return (b == 0 ? a : gcd(b, a % b));
-  }
+    int gcd(int a, int b) {
+        return (b == 0 ? a : gcd(b, a % b));
+    }
 
 snippet     isPrime
 abbr        isPrime
 options     head
-  bool isPrime(int n) {
-    for(int i = 2; i * i <= n; i++) if(!(n % i)) return false;
-    return n == 1 ? false : true;
-  }
+    bool isPrime(int n) {
+        for(int i = 2; i * i <= n; i++) if(!(n % i)) return false;
+        return n == 1 ? false : true;
+    }
 
 snippet     lcm
 abbr        lcm
@@ -359,14 +371,14 @@ options     head
 snippet     powMod
 abbr        powMod
 options     head
-  long long int powMod(long long int n, long long int p) {
-    if(p == 0)
-      return 1;
-    else if(p % 2 == 0)
-      return (powMod(n, p / 2) * powMod(n, p / 2)) % MOD;
-    else if(p % 2 == 1)
-      return (powMod(n, p - 1) * n) % MOD;
-  }
+    long long int powMod(long long int n, long long int p) {
+        if(p == 0)
+            return 1;
+        else if(p % 2 == 0)
+            return (powMod(n, p / 2) * powMod(n, p / 2)) % MOD;
+        else if(p % 2 == 1)
+            return (powMod(n, p - 1) * n) % MOD;
+    }
 
 #####################
 #                   #
@@ -405,7 +417,6 @@ options     head
             return (sum[gx][gy] - sum[sx][gy] - sum[gx][sy] + sum[sx][sy]);
         }
     };
-
 
 snippet     digitDP
 abbr        digitDP
@@ -446,19 +457,19 @@ options     head
 snippet     binarySerch
 abbr        binarySerch
 options     head
-  template <class T>
-  bool c(T mid) {
+    template <class T>
+    bool c(T mid) {
 
-  }
-
-  template <class T>
-  T execute(T low, T high) {
-    for(int i = 0; i < 100; i++) {
-     T mid = (high + low) / 2;
-     (c(mid) ? low : high) = mid;
     }
-    return low;
-  }
+
+    template <class T>
+    T execute(T low, T high) {
+        for(int i = 0; i < 100; i++) {
+            T mid = (high + low) / 2;
+            (c(mid) ? low : high) = mid;
+        }
+        return low;
+    }
 
 
 #####################
@@ -580,11 +591,11 @@ options     head
     namespace std {
         bool operator < ( const P & a, const P & b ) {
             return real( a ) != real( b ) ? real( a ) < real( b )
-                                          : imag( a ) < imag( b );
+                : imag( a ) < imag( b );
         }
         bool operator == ( const P & a, const P & b ) {
             return a.real() == b.real() &&
-                   a.imag() == b.imag();
+                a.imag() == b.imag();
         }
     }
 
@@ -629,18 +640,18 @@ options     head
 
     bool intersectLL( const L & l, const L & m ) {
         return abs( cross( l[1] - l[0], m[1] - m[0] ) ) > EPS || // non-parallel
-               abs( cross( l[1] - l[0], m[0] - l[0] ) ) < EPS;   // same line
+            abs( cross( l[1] - l[0], m[0] - l[0] ) ) < EPS;   // same line
     }
     bool intersectLS( const L & l, const L & s ) {
         return cross( l[1] - l[0], s[0] - l[0]) *       // s[0] is left of l
-               cross( l[1] - l[0], s[1] - l[0]) < EPS; // s[1] is right of l
+            cross( l[1] - l[0], s[1] - l[0]) < EPS; // s[1] is right of l
     }
     bool intersectLP( const L & l, const P & p ) {
         return abs( cross( l[1] - p, l[0] - p ) ) < EPS;
     }
     bool intersectSS( const L & s, const L & t ) {
         return ccw( s[0], s[1], t[0] ) * ccw( s[0], s[1], t[1] ) <= 0 &&
-               ccw( t[0], t[1], s[0] ) * ccw( t[0], t[1], s[1] ) <= 0;
+            ccw( t[0], t[1], s[0] ) * ccw( t[0], t[1], s[1] ) <= 0;
     }
     bool intersectSP( const L & s, const P & p ) {
         return abs( s[0] - p ) + abs( s[1] - p ) - abs( s[1] - s[0] ) < EPS; // triangle inequality
@@ -658,7 +669,7 @@ options     head
             return 0;
         }
         if ( ( d1 < c.r - EPS && d2 > c.r + EPS ) ||
-             ( d1 > c.r + EPS && d2 < c.r - EPS ) ) {
+                ( d1 > c.r + EPS && d2 < c.r - EPS ) ) {
             return 1;
         }
         const P h = projection( l, c.c );
