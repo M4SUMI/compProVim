@@ -1,30 +1,28 @@
 snippet     main
 abbr        main
 options     head
-  #include <bits/stdc++.h>
-  #define range(i, a, b) for(int i = (a); i < (b); i++)
-  #define rep(i, a) range(i, 0, a)
-  using namespace std;
+    #include <bits/stdc++.h>
+    #define range(i, a, b) for(int i = (a); i < (b); i++)
+    #define rep(i, a) range(i, 0, a)
+    using namespace std;
 
-  int main() {
-    return 0;
-  }
+    int main() {
+        return 0;
+    }
 
 snippet     rep
 abbr        rep
 options     head
-  rep (${1:i}, ${2}) {
-    ${3:TARGET}
-  }
+    rep (${1:i}, ${2}) {
+        ${3:TARGET}
+    }
 
 snippet     range
 abbr        range
 options     head
-  range (${1:i}, ${2}, ${3}) {
-    ${4:TARGET}
-  }
-
-
+    range (${1:i}, ${2}, ${3}) {
+        ${4:TARGET}
+    }
 
 #####################
 #                   #
@@ -34,63 +32,87 @@ options     head
 snippet     unionFindTree
 abbr        unionFindTree
 options     head
-  class unionFindTree {
-	private:
-		vector <int> tree;
-		vector <int> rank;
+    class UnionFindTree {
+    private:
+        vector <int> tree;
+        vector <int> rank;
         vector <int> elem;
-	public:
-		unionFindTree() {}
+    public:
+        UnionFindTree() {}
 
-		unionFindTree(int sz) {
-			tree = vector <int> (sz);
-			rank = vector <int> (sz, 0);
-            elem = vecotr <int> (sz, 0);
-			for(int i = 0; i < tree.size(); i++)
-				tree[i] = i;
-		}
+        UnionFindTree(int sz) : tree(sz), rank(sz, 0), elem(sz, 0) {
+            for(int i = 0; i < tree.size(); i++) tree[i] = i;
+        }
 
-		unionFindTree(const unionFindTree &o) {
-			tree = o.tree;
-			rank = o.rank;
-      elem = o.elem;
-		}
+        UnionFindTree(const unionFindTree &o) {
+            tree = o.tree;
+            rank = o.rank;
+            elem = o.elem;
+        }
 
-		unionFindTree &operator=(const unionFindTree &o) {
-			tree = o.tree;
-			rank = o.rank;
-      elem = o.elem;
-			return (*this);
-		};
+        UnionFindTree &operator=(const unionFindTree &o) {
+            tree = o.tree;
+            rank = o.rank;
+            elem = o.elem;
+            return (*this);
+        };
 
-		int root(int x) {
-			return tree[x] == x ? x : tree[x] = root(tree[x]);
-		}
+        int root(int x) {
+            return tree[x] == x ? x : tree[x] = root(tree[x]);
+        }
 
-		bool same(int a, int b) {
-			return root(a) == root(b);
-		}
+        bool same(int a, int b) {
+            return root(a) == root(b);
+        }
 
-		void unite(int a, int b) {
-			a = root(a);
-			b = root(b);
-			if(a == b)return;
+        void unite(int a, int b) {
+            a = root(a);
+            b = root(b);
+            if(a == b)return;
 
-			if(rank[a] < rank[b]) swap(a, b);
+            if(rank[a] < rank[b]) swap(a, b);
 
-			tree[b] = a;
-			rank[a] += rank[a] == rank[b];
-      elem[a] += elem[b];
-		}
+            tree[b] = a;
+            rank[a] += rank[a] == rank[b];
+            elem[a] += elem[b];
+        }
 
-		int size() {
-			return tree.size();
-		}
+        int size() {
+            return tree.size();
+        }
 
-    int size(int a) {
-      return elem[root(a)];
-    }
-  };
+        int size(int a) {
+            return elem[root(a)];
+        }
+    };
+
+snippet     binaryIndexedTree
+abbr        binaryIndexedTree
+options     head
+    template <class T>
+    class BinaryIndexedTree {
+        int N;
+        vector <T> bit;
+
+    public:
+        BinaryIndexedTree(int n) : N(n), bit(n + 1, 0) {}
+
+        BinaryIndexedTree(vector <T> ary) : N(ary.size()), bit(ary) {
+            for (int x = 0; x < N - 1; x++) bit[x + (x & -x)] += bit[x];
+        }
+
+        void add(int a, T w) {
+            for (++a; a <= N; a += a & -a) bit[a] += w;
+        }
+
+        T sum(int d) {
+            T ret = 0;
+            for (++d; d > 0; d -= d & -d) ret += bit[d];
+            return (ret);
+        }
+
+        T sum(int x, int y) { return (sum(y) - sum(x - 1)); }
+    };
 
 #####################
 #                   #
@@ -100,124 +122,124 @@ options     head
 snippet     kruskal
 abbr        kruskal
 options     head
-  class Kruskal : public unionFindTree{
-  private:
-    struct edge {
-      int u, v, cost;
-      bool operator< (const edge& e) const {
-        return cost < e.cost;
-      }
-    };
-    vector <edge> es;
-    int V;
+    class Kruskal : public UnionFindTree{
+    private:
+        struct edge {
+            int u, v, cost;
+            bool operator< (const edge& e) const {
+                return cost < e.cost;
+            }
+        };
+        vector <edge> es;
+        int V;
 
-  public:
-    Kruskal(int v, int e) : unionFindTree(v){
-      V = v;
-      es = vector <edge> (e);
-    }
-
-    void addEdge(int start, int end, int cost) {
-      es.push_back({start, end, cost});
-    }
-
-    int execute() {
-      sort(es.begin(), es.end());
-      int res = 0;
-      for(int i = 0; i < es.size(); i++) {
-        edge e = es[i];
-        if(!same(e.u, e.v)) {
-          unite(e.u, e.v);
-          res += e.cost;
+    public:
+        Kruskal(int v, int e) : unionFindTree(v){
+            V = v;
+            es = vector <edge> (e);
         }
-      }
-      return res;
-    }
-  };
+
+        void addEdge(int start, int end, int cost) {
+            es.push_back({start, end, cost});
+        }
+
+        int execute() {
+            sort(es.begin(), es.end());
+            int res = 0;
+            for(int i = 0; i < es.size(); i++) {
+                edge e = es[i];
+                if(!same(e.u, e.v)) {
+                    unite(e.u, e.v);
+                    res += e.cost;
+                }
+            }
+            return res;
+        }
+    };
 
 snippet     dijkstra
 abbr        dijkstra
 options     head
-  class Dijkstra {
-  private:
-    struct edge {int to, cost;};
-    vector <vector <edge>> G;
-    vector <int> d;
-    priority_queue <pair <int, int>, vector <pair <int, int>>, greater <pair <int, int>>> que;
+    class Dijkstra {
+    private:
+        struct edge {int to, cost;};
+        vector <vector <edge>> G;
+        vector <int> d;
+        priority_queue <pair <int, int>, vector <pair <int, int>>, greater <pair <int, int>>> que;
 
-  public:
-    Dijkstra(int v) {
-      G = vector <vector <edge>> (v);
-      d = vector <int> (v);
-    }
-
-    void addEdge(int start, int end, int cost) {
-      G[start].push_back({end, cost});
-    }
-
-    int dist(int n) {
-      return d[n];
-    }
-
-    void execute(int start) {
-      for (int i = 0; i < G.size(); i++)
-        d[i] = i == start ? 0 : INF;
-      que.push({0 , start});
-      while(!que.empty()) {
-        pair <int, int> p = que.top(); que.pop();
-        int from = p.second;
-        if(d[from] < p.first)continue;
-        for(int i = 0; i < G[from].size(); i++) {
-          edge e = G[from][i];
-          if(d[e.to] > d[from] + e.cost) {
-            d[e.to] = d[from] + e.cost;
-            que.push({d[e.to], e.to});
-          }
+    public:
+        Dijkstra(int v) {
+            G = vector <vector <edge>> (v);
+            d = vector <int> (v);
         }
-      }
-    }
-  };
+
+        void addEdge(int start, int end, int cost) {
+            G[start].push_back({end, cost});
+        }
+
+        int dist(int n) {
+            return d[n];
+        }
+
+        void execute(int start) {
+            for (int i = 0; i < G.size(); i++)
+                d[i] = i == start ? 0 : INF;
+            que.push({0 , start});
+            while(!que.empty()) {
+                pair <int, int> p = que.top(); que.pop();
+                int from = p.second;
+                if(d[from] < p.first)continue;
+                for(int i = 0; i < G[from].size(); i++) {
+                    edge e = G[from][i];
+                    if(d[e.to] > d[from] + e.cost) {
+                        d[e.to] = d[from] + e.cost;
+                        que.push({d[e.to], e.to});
+                    }
+                }
+            }
+        }
+    };
 
 snippet     warshall
 abbr        warshall
 options     head
-  class Warshall {
-  private:
-    vector <vector <int>> G;
+    class Warshall {
+    private:
+        vector <vector <int>> G;
 
-  public:
-    Warshall(int v) {
-      G = vector <vector <int>> (v, vector <int> (v));
-      for(int i = 0; i < G.size(); i++)
-        for(int j = 0; j < G.size(); j++)
-          G[i][j] = i == j ? 0 : INF;
-    }
+    public:
+        Warshall(int v) {
+            G = vector <vector <int>> (v, vector <int> (v));
+            for(int i = 0; i < G.size(); i++)
+                for(int j = 0; j < G.size(); j++)
+                    G[i][j] = i == j ? 0 : INF;
+        }
 
-    void addEdge(int start, int end, int cost) {
-      G[start][end] = cost;
-    }
+        void addEdge(int start, int end, int cost) {
+            G[start][end] = cost;
+        }
 
-    int dist(int start, int end) {
-      return G[start][end];
-    }
+        int dist(int start, int end) {
+            return G[start][end];
+        }
 
-    bool checkNegativeCircle() {
-      bool flag = false;
-      for (int i = 0; i < G.size(); i++)
-        if(G[i][i] < 0)
-          flag = true;
-      return flag;
-    }
+        bool checkNegativeCircle() {
+            bool flag = false;
+            for (int i = 0; i < G.size(); i++) if(G[i][i] < 0) {
+                flag = true;
+            }
+            return flag;
+        }
 
-    void execute() {
-      for(int k = 0; k < G.size(); k++)
-        for(int i = 0; i < G.size(); i++)
-          for(int j = 0; j < G.size(); j++)
-            if(G[i][k] != INF && G[k][j] != INF)
-              G[i][j] = min(G[i][j], G[i][k] + G[k][j]);
-    }
+        void execute() {
+            for(int k = 0; k < G.size(); k++)
+                for(int i = 0; i < G.size(); i++)
+                    for(int j = 0; j < G.size(); j++)
+                        if(G[i][k] != INF && G[k][j] != INF)
+                            G[i][j] = min(G[i][j], G[i][k] + G[k][j]);
+        }
 
-  };
+    };
 
 snippet     stronglyConnectedComponent
 abbr        stronglyConnectedComponent
@@ -278,6 +300,7 @@ options     head
             return res;
         }
     };
+
 ######################
 #                    #
 #        Math        #
@@ -286,16 +309,16 @@ options     head
 snippet     eratosthenes
 abbr        eratosthenes
 options     head
-  vector <bool> eratosthenes(int n) {
-    vector <bool> prime(n + 1, true);
-      prime = vector <bool> (n + 1, true);
-      if(n >= 0) prime[0] = false;
-      if(n >= 1) prime[1] = false;
-      for(int i = 2; i * i <= n; i++)
-        if(prime[i])
-          for(int j = i * 2; j < n; j += i)
-            prime[j] = false;
-  }
+    vector <bool> eratosthenes(int n) {
+        vector <bool> prime(n + 1, true);
+        prime = vector <bool> (n + 1, true);
+        if(n >= 0) prime[0] = false;
+        if(n >= 1) prime[1] = false;
+        for(int i = 2; i * i <= n; i++) if(prime[i]) {
+            for(int j = i * 2; j < n; j += i) prime[j] = false;
+        }
+        return prime;
+    }
 
 snippet     factorial
 abbr        factorial
