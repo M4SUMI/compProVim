@@ -14,8 +14,6 @@ augroup saveAndCompile
 	autocmd BufWritePost main.cpp call SaveAndCompile()
 augroup END
 
-autocmd saveAndCompile BufWritePost main.cpp call SaveAndCompile()
-
 let g:neosnippet#snippets_directory=s:snips
 
 function! SaveAndCompile ()
@@ -31,8 +29,7 @@ function! SaveAndCompile ()
 				\ " -hook/time 1"
 endfunction
 
-
 syn keyword cConstant INF MOD EPS
-syn keyword	cRepeat		rep range
+syn keyword	cRepeat   rep range
 
 command! Q wqall
