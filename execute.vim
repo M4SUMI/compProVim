@@ -17,11 +17,7 @@ augroup saveAndCompile
 	autocmd BufWritePost main.cpp call SaveAndCompile()
 augroup END
 
-<<<<<<< HEAD
 autocmd saveAndCompile BufWritePost main.cpp call SaveAndCompile()
-=======
-let g:neosnippet#snippets_directory=s:snips
->>>>>>> ba5ef9c65c14810b0e15052eb814c8569dd30496
 
 function! SaveAndCompile ()
 	wincmd j
