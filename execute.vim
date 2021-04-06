@@ -1,7 +1,10 @@
 let s:compVim_dir = expand('<sfile>:p:h')
 let s:main = s:compVim_dir . "/main.cpp"
 let s:in = s:compVim_dir . "/in.txt"
-let s:snips = s:compVim_dir . "/snippets"
+let s:snips = s:compVim_dir . "/neosnippets"
+
+let g:neosnippet#snippets_directory=s:snips
+
 exec "cd " . s:compVim_dir
 echo "競プロモード始動！！！"
 exec "edit " . s:main
@@ -15,8 +18,6 @@ augroup saveAndCompile
 augroup END
 
 autocmd saveAndCompile BufWritePost main.cpp call SaveAndCompile()
-
-let g:neosnippet#snippets_directory=s:snips
 
 function! SaveAndCompile ()
 	wincmd j
